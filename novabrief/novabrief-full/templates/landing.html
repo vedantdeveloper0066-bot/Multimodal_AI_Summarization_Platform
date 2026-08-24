@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NovaBrief — AI Summarizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <script src="/static/js/theme.js"></script>
+  <link rel="stylesheet" href="/static/css/main.css"/>
+</head>
+<body>
+<div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
+<div class="grid-overlay"></div>
+
+<header class="header" id="top">
+  <div class="header-inner">
+    <a href="/" class="logo"><div class="logo-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" fill="url(#hg)"/><defs><linearGradient id="hg" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#6C63FF"/><stop offset="1" stop-color="#00D4FF"/></linearGradient></defs></svg></div><span class="logo-text">NOVABRIEF</span></a>
+    <nav class="main-nav">
+      <a href="#use-cases" class="nav-link">Use Cases</a>
+      <a href="#features"  class="nav-link">Features</a>
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#faq"       class="nav-link">FAQ</a>
+    </nav>
+    <div class="header-right">
+      <div class="theme-switcher-placeholder"></div>
+      <a href="/admin" id="adminHeaderLink" class="btn-ghost" style="display:none">⚙ Admin</a>
+      <button class="btn-ghost" id="headerSignIn">Sign In</button>
+      <a href="/app" class="btn-primary" id="headerGetStarted">Get Started</a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#use-cases" class="mobile-nav-link" data-close>Use Cases</a>
+    <a href="#features"  class="mobile-nav-link" data-close>Features</a>
+    <a href="#how-it-works" class="mobile-nav-link" data-close>How It Works</a>
+    <a href="#faq"       class="mobile-nav-link" data-close>FAQ</a>
+    <div class="mobile-nav-auth">
+      <button class="btn-ghost" id="mobileSignIn">Sign In</button>
+      <a href="/app" class="btn-primary">Get Started</a>
+    </div>
+  </div>
+</header>
+
+<div class="modal-overlay" id="authOverlay" style="display:none">
+  <div class="modal-card glass-card">
+    <button class="modal-close" id="authClose">✕</button>
+    <div class="auth-tabs-row">
+      <button class="auth-tab active" id="tabSignIn">Sign In</button>
+      <button class="auth-tab" id="tabSignUp">Register</button>
+    </div>
+    <div id="formSignIn">
+      <h2 class="modal-title">Welcome back</h2>
+      <p class="modal-sub">Sign in to access your summaries and history.</p>
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" id="siEmail" placeholder="you@example.com"/>
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" id="siPass" placeholder="••••••••"/>
+      <button class="btn-primary w-full mt-3" id="doSignIn">Sign In</button>
+      <p class="form-msg" id="siMsg"></p>
+      <p class="form-switch">No account? <a href="#" id="goRegister">Register</a></p>
+    </div>
+    <div id="formSignUp" style="display:none">
+      <h2 class="modal-title">Create account</h2>
+      <p class="modal-sub">Save summaries and pick up anywhere.</p>
+      <label class="form-label">Name</label>
+      <input class="form-input" type="text" id="suName" placeholder="Your name"/>
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" id="suEmail" placeholder="you@example.com"/>
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" id="suPass" placeholder="At least 6 characters"/>
+      <button class="btn-primary w-full mt-3" id="doSignUp">Create Account</button>
+      <p class="form-msg" id="suMsg"></p>
+      <p class="form-switch">Have an account? <a href="#" id="goSignIn">Sign in</a></p>
+      <p class="form-switch" id="adminModalLink" style="display:none"><a href="/admin">⚙ Admin Panel</a></p>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="pulse-dot"></span>AI-Powered · Fast · Multilingual</div>
+    <h1 class="hero-title">Turn hours of content<br/>into <span class="g-text">clear insights</span></h1>
+    <p class="hero-sub">Summarize YouTube videos, PDFs, audio recordings, images and more. Automatic language detection — summaries always delivered in the source language.</p>
+    <div class="hero-ctas">
+      <a href="/app" class="btn-primary btn-lg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Start Summarizing</a>
+      <a href="#how-it-works" class="btn-ghost btn-lg">See How It Works →</a>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-v">6</span><span class="stat-l">Input Formats</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><span class="stat-v">50+</span><span class="stat-l">Languages</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><span class="stat-v">100%</span><span class="stat-l">Private</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><span class="stat-v">Free</span><span class="stat-l">Forever</span></div>
+  </div>
+</section>
+
+<section class="content-section" id="use-cases">
+  <div class="section-header">
+    <div class="eyebrow"><span class="pulse-dot"></span>Use Cases</div>
+    <h2 class="section-title">Who uses NovaBrief?</h2>
+    <p class="section-sub">Anyone who reads or listens for a living — or just wants to save time.</p>
+  </div>
+  <div class="uc-grid">
+    <div class="uc-card reveal"><div class="uc-icon" style="color:#6C63FF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><span class="uc-tag">Students</span><h3>Compress lectures into notes</h3><p>Turn a 3-hour lecture or 80-page textbook into focused study material.</p></div>
+    <div class="uc-card reveal"><div class="uc-icon" style="color:#A855F7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><span class="uc-tag">Researchers</span><h3>Survey literature in minutes</h3><p>Upload academic PDFs and extract key findings, methods and conclusions fast.</p></div>
+    <div class="uc-card reveal"><div class="uc-icon" style="color:#F59E0B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><span class="uc-tag">Journalists</span><h3>Process interviews at speed</h3><p>Feed in a recorded interview and get structured takeaways to build your story.</p></div>
+    <div class="uc-card reveal"><div class="uc-icon" style="color:#10B981"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div><span class="uc-tag">Video Fans</span><h3>Get the gist of any video</h3><p>Paste a YouTube link and get the core takeaways without the time commitment.</p></div>
+    <div class="uc-card reveal"><div class="uc-icon" style="color:#EF4444"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><span class="uc-tag">Legal &amp; Finance</span><h3>Extract clauses from contracts</h3><p>Get plain-language summaries of contracts, filings and regulatory documents.</p></div>
+    <div class="uc-card reveal"><div class="uc-icon" style="color:#6C63FF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><span class="uc-tag">Developers</span><h3>Cut through documentation</h3><p>Paste a sprawling RFC or API reference and get just what you need to act on.</p></div>
+    <div class="uc-card reveal"><div class="uc-icon" style="color:#00D4FF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="uc-tag">Visual Content</span><h3>Understand images instantly</h3><p>Upload any image and get a detailed AI-generated description of its content.</p></div>
+  </div>
+</section>
+
+<section class="content-section" id="features">
+  <div class="section-header">
+    <div class="eyebrow"><span class="pulse-dot"></span>Features</div>
+    <h2 class="section-title">Built different from the start</h2>
+    <p class="section-sub">Local AI. Multilingual output. Full history. Everything in one place.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card reveal"><div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Completely Private</h3><p>Your content never leaves your device. AI runs locally — no cloud uploads.</p></div>
+    <div class="feat-card reveal"><div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z"/></svg></div><h3>50+ Languages</h3><p>Auto-detects input language and summarizes in the same language. Switch anytime.</p></div>
+    <div class="feat-card reveal"><div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><h3>Image Summarizer</h3><p>Upload any image — BLIP AI model generates a detailed description of what it shows.</p></div>
+    <div class="feat-card reveal"><div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><h3>Proportional Summaries</h3><p>Short input → short summary. Long content → detailed multi-paragraph summary.</p></div>
+    <div class="feat-card reveal"><div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div><h3>Audio Narration</h3><p>Get your summary read aloud in the correct language. Download as MP3.</p></div>
+    <div class="feat-card reveal"><div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div><h3>Full History</h3><p>Every summary saved to your account. Download as PDF or audio anytime.</p></div>
+  </div>
+</section>
+
+<section class="content-section" id="how-it-works">
+  <div class="section-header">
+    <div class="eyebrow"><span class="pulse-dot"></span>The Process</div>
+    <h2 class="section-title">Four steps to clarity</h2>
+  </div>
+  <div class="process-list">
+    <div class="process-item reveal"><div class="p-num">01</div><div class="p-body"><div class="p-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg></div><h3>Pick a source</h3><p>YouTube link, video, audio, PDF, plain text, or an image — six formats supported.</p></div></div>
+    <div class="process-connector"></div>
+    <div class="process-item reveal"><div class="p-num">02</div><div class="p-body"><div class="p-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><h3>Content extracted</h3><p>Captions, transcripts, PDF text or image descriptions pulled automatically.</p></div></div>
+    <div class="process-connector"></div>
+    <div class="process-item reveal"><div class="p-num">03</div><div class="p-body"><div class="p-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>AI summarizes</h3><p>Local BART model reads it and writes a fluent, proportional summary in the source language.</p></div></div>
+    <div class="process-connector"></div>
+    <div class="process-item reveal"><div class="p-num">04</div><div class="p-body"><div class="p-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4"/></svg></div><h3>Read it, hear it, save it</h3><p>Get text, audio narration, or both — switch language anytime, save to history.</p></div></div>
+  </div>
+</section>
+
+<section class="content-section" id="faq">
+  <div class="section-header">
+    <div class="eyebrow"><span class="pulse-dot"></span>FAQ</div>
+    <h2 class="section-title">Questions answered</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item"><button class="faq-q" aria-expanded="false">Does NovaBrief send my data anywhere?<svg class="faq-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>No. The AI model runs entirely on your machine. Your content never leaves your device. The only features needing internet are YouTube transcript fetching, speech recognition for audio, and text-to-speech narration.</p></div></div>
+    <div class="faq-item"><button class="faq-q" aria-expanded="false">Which languages are supported?<svg class="faq-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>50+ languages. NovaBrief auto-detects the language of your input and delivers the summary in the same language. You can also switch to any other language after the summary is generated — including the audio narration.</p></div></div>
+    <div class="faq-item"><button class="faq-q" aria-expanded="false">How long are the summaries?<svg class="faq-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>Proportional to the input. A short article gets a concise paragraph. A 50-page report or 3-hour lecture gets several detailed paragraphs. The length scales automatically so nothing important is lost.</p></div></div>
+    <div class="faq-item"><button class="faq-q" aria-expanded="false">Is my history saved between sessions?<svg class="faq-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>Yes — when you're logged in, every summary is saved to your account (MySQL database). You can view, re-read, download as PDF or re-listen to any past summary from your History page.</p></div></div>
+    <div class="faq-item"><button class="faq-q" aria-expanded="false">Can I summarize confidential documents?<svg class="faq-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>Absolutely. PDF and text summarization is 100% offline after the first model download. Audio/video transcription and TTS use free third-party APIs that require brief internet access — use PDF/text mode for full offline confidentiality.</p></div></div>
+    <div class="faq-item"><button class="faq-q" aria-expanded="false">What is the maximum file size?<svg class="faq-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>100 MB per file. Text length is unlimited — very long documents are automatically chunked, summarized in pieces, and merged into one coherent output.</p></div></div>
+    <div class="faq-item"><button class="faq-q" aria-expanded="false">How does image summarization work?<svg class="faq-arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a"><p>NovaBrief uses Salesforce BLIP — a vision-language AI model — to generate multiple detailed captions from different angles (content, scene, objects) and combines them into a comprehensive description in your chosen language.</p></div></div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-card glass-card">
+    <div class="cta-glow"></div>
+    <div class="cta-inner">
+      <div class="eyebrow"><span class="pulse-dot"></span>Get Started</div>
+      <h2 class="cta-title">Read less.<br/>Know more.</h2>
+      <p class="cta-sub">No setup required for your first summary. Sign up to save your history.</p>
+      <a href="/app" class="btn-primary btn-lg">Try It Now — Free</a>
+      <div class="cta-trust"><span>✓ Multilingual</span><span>✓ Completely private</span><span>✓ History saved</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" fill="url(#fg)"/><defs><linearGradient id="fg" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#6C63FF"/><stop offset="1" stop-color="#00D4FF"/></linearGradient></defs></svg><span class="g-text" style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.05em">NOVABRIEF</span></div>
+      <p class="footer-tag">Less reading, more knowing.<br/>Local AI summarization — free forever.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col"><h4>Product</h4><a href="/app">Summarizer</a><a href="#features">Features</a><a href="#use-cases">Use Cases</a><a href="/history">My History</a></div>
+      <div class="footer-col"><h4>Support</h4><a href="#faq">FAQ</a><a href="#how-it-works">How It Works</a><a href="#top">Setup Guide</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 NovaBrief · Free · Private · Local AI</p><p>Your data stays on your machine.</p></div>
+</footer>
+
+<script>
+
+(function(){
+  fetch('/api/auth/me', {credentials:'include'}).then(function(r){return r.json();}).then(function(d){
+    if (!d.logged_in) return;
+    var hsi = document.getElementById('headerSignIn'), hgs = document.getElementById('headerGetStarted');
+    if (hsi) hsi.style.display = 'none';
+    if (hgs) hgs.textContent = 'Go to App';
+    if (d.user && d.user.is_admin) {
+      var al = document.getElementById('adminHeaderLink'); if (al) al.style.display = 'inline-flex';
+      var am = document.getElementById('adminModalLink');  if (am) am.style.display = 'block';
+    }
+  }).catch(function(){});
+})();
+
+(function(){
+  var btn=document.getElementById('mobileMenuBtn'),nav=document.getElementById('mobileNav'),open=false;
+  function toggle(){open=!open;nav.classList.toggle('open',open);btn.classList.toggle('active',open);document.body.style.overflow=open?'hidden':'';}
+  if(btn)btn.addEventListener('click',toggle);
+  document.querySelectorAll('[data-close]').forEach(function(el){el.addEventListener('click',function(){if(open)toggle();});});
+})();
+
+(function(){
+  var overlay=document.getElementById('authOverlay'),close=document.getElementById('authClose');
+  var fsi=document.getElementById('formSignIn'),fsu=document.getElementById('formSignUp');
+  var ti=document.getElementById('tabSignIn'),tu=document.getElementById('tabSignUp');
+  function showTab(t){var s=t==='si';fsi.style.display=s?'block':'none';fsu.style.display=s?'none':'block';ti.classList.toggle('active',s);tu.classList.toggle('active',!s);}
+  function openAuth(t){
+    showTab(t||'si');overlay.style.display='flex';document.body.style.overflow='hidden';
+    checkDbStatus();
+  }
+  function closeAuth(){overlay.style.display='none';document.body.style.overflow='';}
+
+  // Show a banner inside the modal if MySQL isn't connected
+  async function checkDbStatus(){
+    var existing=document.getElementById('dbStatusBanner');
+    if(existing)existing.remove();
+    try{
+      const r=await fetch('/api/db-status');
+      const d=await r.json();
+      if(!d.connected){
+        var banner=document.createElement('div');
+        banner.id='dbStatusBanner';
+        banner.style.cssText='background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:.78rem;color:var(--muted-hi);line-height:1.5;';
+        banner.innerHTML='⚠️ <strong style="color:var(--snow)">Database not connected.</strong> Sign in / Register won\'t work yet.<br>Run <code style="background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;color:var(--cyan)">python setup_db.py</code> after editing <code style="background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;color:var(--cyan)">config.py</code>.';
+        document.querySelector('.modal-card').insertBefore(banner,document.querySelector('.auth-tabs-row'));
+      }
+    }catch(e){}
+  }
+  document.getElementById('headerSignIn')?.addEventListener('click',function(){openAuth('si');});
+  document.getElementById('mobileSignIn')?.addEventListener('click',function(){openAuth('si');});
+  if(close)close.addEventListener('click',closeAuth);
+  if(ti)ti.addEventListener('click',function(){showTab('si');});
+  if(tu)tu.addEventListener('click',function(){showTab('su');});
+  document.getElementById('goRegister')?.addEventListener('click',function(e){e.preventDefault();showTab('su');});
+  document.getElementById('goSignIn')?.addEventListener('click',function(e){e.preventDefault();showTab('si');});
+  if(overlay)overlay.addEventListener('click',function(e){if(e.target===overlay)closeAuth();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAuth();});
+
+  if(new URLSearchParams(location.search).get('login')==='1')openAuth('si');
+
+  document.getElementById('doSignIn')?.addEventListener('click',async function(){
+    var email=document.getElementById('siEmail').value,pass=document.getElementById('siPass').value,msg=document.getElementById('siMsg');
+    msg.textContent='Signing in…';
+    const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass}),credentials:'include'});
+    const d=await r.json();
+    if(d.success){msg.style.color='var(--cyan)';msg.textContent='✓ Signed in! Redirecting…';setTimeout(function(){location.href='/app';},800);}
+    else{msg.style.color='#EF4444';msg.textContent=d.error;}
+  });
+
+  document.getElementById('doSignUp')?.addEventListener('click',async function(){
+    var name=document.getElementById('suName').value,email=document.getElementById('suEmail').value,pass=document.getElementById('suPass').value,msg=document.getElementById('suMsg');
+    msg.textContent='Creating account…';
+    const r=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password:pass}),credentials:'include'});
+    const d=await r.json();
+    if(d.success){msg.style.color='var(--cyan)';msg.textContent='✓ Account created! Redirecting…';setTimeout(function(){location.href='/app';},800);}
+    else{msg.style.color='#EF4444';msg.textContent=d.error;}
+  });
+})();
+
+document.querySelectorAll('.faq-q').forEach(function(b){b.addEventListener('click',function(){
+  var it=b.closest('.faq-item'),op=it.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');el.querySelector('.faq-q').setAttribute('aria-expanded','false');});
+  if(!op){it.classList.add('open');b.setAttribute('aria-expanded','true');}
+});});
+
+if(window.IntersectionObserver){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}});},{threshold:.12});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});}
+</script>
+</body>
+</html>

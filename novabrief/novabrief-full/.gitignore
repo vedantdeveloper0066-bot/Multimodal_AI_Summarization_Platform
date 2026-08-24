@@ -1,0 +1,28 @@
+# NovaBrief — .gitignore
+
+# Secrets — never commit real credentials
+.env
+config.py.local
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Bundled ffmpeg fallback binary — 80MB+ Windows .exe, not needed to run
+# the app (imageio-ffmpeg from requirements.txt handles this cross-platform).
+# Keep it locally if you rely on it; it just shouldn't live in git.
+_ffmpeg_shim/
+
+# Runtime data — user content, caches, logs (not source)
+uploads/
+novabrief_cache.sqlite3
+*.log
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

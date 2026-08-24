@@ -1,0 +1,50 @@
+# NovaBrief — Full Edition dependencies
+# Install: pip install -r requirements.txt
+# PyTorch (CPU): pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# ── Web framework ───────────────────────────────────────────────────
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# ── Database (MySQL) ────────────────────────────────────────────────
+mysql-connector-python>=8.4.0
+
+# ── Auth ────────────────────────────────────────────────────────────
+bcrypt>=4.1.0
+
+# ── AI — Text summarization (BART, local) ──────────────────────────
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.2.0
+transformers>=4.40.0
+sentencepiece>=0.2.0
+
+# ── AI — Image summarization (BLIP, local) ─────────────────────────
+Pillow>=10.0.0
+
+# ── AI — Audio/video transcription (Faster-Whisper, local, GPU) ────
+# CTranslate2-backed — does NOT depend on torch, so transcription keeps
+# working even on a machine where the PyTorch install above has failed.
+faster-whisper>=1.0.0
+
+# ── Extractive fallback ─────────────────────────────────────────────
+sumy>=0.11.0
+nltk>=3.8.0
+
+# ── Language detection & translation ───────────────────────────────
+langdetect>=1.0.9
+deep-translator>=1.11.0
+
+# ── Text extraction ─────────────────────────────────────────────────
+pypdf>=4.0.0
+youtube-transcript-api>=0.6.2
+yt-dlp>=2024.8.6
+pydub>=0.25.1
+
+# ── Bundled ffmpeg (no system install needed — fixes audio/video errors) ──
+imageio-ffmpeg>=0.4.9
+
+# ── Text-to-speech (multilingual, free) ────────────────────────────
+gTTS>=2.5.0
+
+# ── PDF generation (for history download) ──────────────────────────
+fpdf2>=2.7.0
